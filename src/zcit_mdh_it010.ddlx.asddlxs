@@ -1,0 +1,54 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { 
+    typeName: 'Freight Order', 
+    typeNamePlural: 'Freight Orders', 
+    title: { type: #STANDARD, value: 'FreightId' } 
+  }
+}
+annotate entity ZCIT_CRH_IT010 with 
+{
+  @UI.facet: [ 
+    { 
+      id: 'Route', 
+      purpose: #STANDARD, 
+      type: #IDENTIFICATION_REFERENCE, 
+      label: 'Route Details', 
+      position: 10 
+    },
+    // 👉 CRITICAL FIX: This makes the child table appear!
+    { 
+      id: 'Stops', 
+      purpose: #STANDARD, 
+      type: #LINEITEM_REFERENCE, 
+      label: 'Route Stops (Child Table)', 
+      position: 20, 
+      targetElement: '_Stops' 
+    }
+  ]
+  
+  // 👉 CRITICAL FIX: Added `label: '...'` to everything so the names show up
+  @UI: { lineItem: [{ position: 10, label: 'Freight ID' }], identification: [{ position: 10, label: 'Freight ID' }] }
+  FreightId;
+  
+  @UI: { lineItem: [{ position: 20, label: 'Source Location' }], identification: [{ position: 20, label: 'Source Location' }] }
+  SourceLoc;
+  
+  @UI: { lineItem: [{ position: 30, label: 'Destination Location' }], identification: [{ position: 30, label: 'Destination Location' }] }
+  DestLoc;
+  
+  @UI: { lineItem: [
+    { position: 40, label: 'Best Route', importance: #HIGH },
+    { type: #FOR_ACTION, dataAction: 'optimizeRoute', label: 'Ask AI to Optimize Route' }
+  ], identification: [{ position: 40, label: 'Best Route' }] }
+  BestRoute;
+  
+  @UI: { lineItem: [{ position: 50, label: 'AI Status' }], identification: [{ position: 50, label: 'AI Status' }] }
+  AiStatus;
+  
+  @UI: { lineItem: [{ position: 60, label: 'Total Distance' }], identification: [{ position: 60, label: 'Total Distance' }] }
+  TotalDist;
+
+  @UI: { lineItem: [{ position: 70, label: 'Total Cost' }], identification: [{ position: 70, label: 'Total Cost' }] }
+  TotalCost;
+}

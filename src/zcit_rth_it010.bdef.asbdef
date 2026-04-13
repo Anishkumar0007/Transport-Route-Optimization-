@@ -1,0 +1,66 @@
+unmanaged implementation in class zcit_bph_it010 unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZCIT_RTH_IT010 alias RouteHdr
+early numbering
+draft table zcit_dhd_it010
+lock master total etag LocalLastChgAt
+authorization master ( instance )
+etag master LocalLastChgAt
+{
+  create;
+  update;
+  delete;
+
+  action optimizeRoute result [1] $self;
+   side effects { action optimizeRoute affects $self; }
+
+
+  draft action Edit;
+  draft action Resume;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare;
+
+  field ( readonly ) FreightId;
+  association _Stops { create; with draft; }
+
+  mapping for zcit_hdr_it010 {
+    FreightId = freightid;
+    SourceLoc = source_loc;
+    DestLoc = dest_loc;
+    BestRoute = best_route;
+    TotalDist = total_dist;
+    DistUnit = dist_unit;
+    TotalCost = total_cost;
+    Currency = currency;
+    AiStatus = ai_status;
+    LocalLastChgAt = locallastchgat;
+  }
+}
+
+define behavior for ZCIT_RTI_IT010 alias RouteItm
+implementation in class zcit_bpi_it010 unique
+draft table zcit_dit_it010
+lock dependent by _Route
+authorization dependent by _Route
+etag master LocalLastChgAt
+{
+  update;
+  delete;
+
+  field ( readonly ) FreightId;
+  field ( mandatory : create ) StopId;
+
+  association _Route { with draft; }
+
+  mapping for zcit_itm_it010 {
+    FreightId = freightid;
+    StopId = stop_id;
+    LocationName = location_name;
+    EtaTime = eta_time;
+    TrafficLvl = traffic_lvl;
+    LocalLastChgAt = locallastchgat;
+  }
+}

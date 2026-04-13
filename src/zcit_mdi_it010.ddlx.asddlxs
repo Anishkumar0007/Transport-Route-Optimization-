@@ -1,0 +1,34 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { 
+    typeName: 'Route Stop', 
+    typeNamePlural: 'Route Stops', 
+    title: { type: #STANDARD, value: 'StopId' } 
+  }
+}
+annotate entity ZCIT_CRI_IT010 with 
+{
+  @UI.facet: [ { 
+    id: 'StopDetails', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Stop Details', 
+    position: 10 
+  } ]
+
+  @UI.hidden: true
+  FreightId;
+
+  // 👉 CRITICAL FIX: Added `label: '...'`
+  @UI: { lineItem: [{ position: 10, label: 'Stop ID' }], identification: [{ position: 10, label: 'Stop ID' }] }
+  StopId;
+
+  @UI: { lineItem: [{ position: 20, label: 'Location Name' }], identification: [{ position: 20, label: 'Location Name' }] }
+  LocationName;
+
+  @UI: { lineItem: [{ position: 30, label: 'ETA Time' }], identification: [{ position: 30, label: 'ETA Time' }] }
+  EtaTime;
+
+  @UI: { lineItem: [{ position: 40, label: 'Traffic Level' }], identification: [{ position: 40, label: 'Traffic Level' }] }
+  TrafficLvl;
+}

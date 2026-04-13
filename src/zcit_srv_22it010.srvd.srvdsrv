@@ -1,0 +1,5 @@
+@EndUserText.label: 'Route Service'
+define service ZCIT_SRV_22IT010 {
+  expose ZCIT_CRH_IT010 as FreightOrders;
+  expose ZCIT_CRI_IT010 as Stops;
+}
